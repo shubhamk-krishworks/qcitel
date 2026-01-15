@@ -1,0 +1,32 @@
+{
+  "C_Cpp.intelliSenseEngine": "default",
+  "idf.espIdfPathWin": "C:\\Users\\shubh\\esp\\v5.5.1\\esp-idf",
+  "idf.pythonInstallPath": "C:\\Users\\shubh\\.espressif\\tools\\idf-python\\3.11.2\\python.exe",
+  "idf.espAdfPathWin": "C:\\Users\\shubh\\.espressif\\esp-adf",
+  "idf.openOcdConfigs": [
+    "interface/ftdi/esp_ftdi.cfg",
+    "target/esp32s3.cfg"
+  ],
+  "idf.portWin": "COM5",
+  "idf.toolsPathWin": "C:\\Users\\shubh\\.espressif",
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32s3"
+  },
+  "clangd.path": "C:\\Users\\shubh\\.espressif\\tools\\esp-clang\\esp-19.1.2_20250312\\esp-clang\\bin\\clangd.exe",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=**",
+    "--compile-commands-dir=c:\\Users\\shubh\\esp\\at_driver\\build"
+  ],
+  "idf.flashType": "UART",
+  "vsmqtt.brokerProfiles": [
+    {
+      "name": "admin",
+      "host": "139.59.65.117",
+      "port": 1886,
+      "clientId": "admin",
+      "password": "Pass@2023",
+      "username": "admin"
+    }
+  ]
+}
