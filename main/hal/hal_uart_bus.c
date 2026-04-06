@@ -15,7 +15,7 @@
  * Configuration
  * ========================================================================== */
 #define RX_BUFFER_SIZE (1024U)
-#define UART_EVENT_QUEUE_LEN 100
+#define UART_EVENT_QUEUE_LEN 256
 
 /* ============================================================================
  * Internal driver structure (opaque)
@@ -90,8 +90,9 @@ static void uart_event_task(void *arg)
         {
             if (event.type == UART_DATA)
             {
-                uint8_t rx_buffer[event.size + 1];
-                int len = uart_read_bytes(drv->port, rx_buffer, event.size, 0);
+                vTaskDelay(pdMS_TO_TICKS(10));
+                uint8_t rx_buffer[512];
+                int len = uart_read_bytes(drv->port, rx_buffer, sizeof(rx_buffer) - 1, 0);
                 rx_buffer[len] = '\0'; // Null-terminate the
                 if (len > 0)
                     drv->callback(drv, HAL_EVENT_RX_DATA, rx_buffer, len, drv->callback_context);

@@ -28,5 +28,6 @@
       "password": "Pass@2023",
       "username": "admin"
     }
-  ]
+  ],
+  "idf.currentSetup": "C:\\Users\\shubh\\esp\\v5.5.1\\esp-idf"
 }

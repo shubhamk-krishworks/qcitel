@@ -57,6 +57,16 @@ extern "C"
 #define AT_CMD_NETWORK_INFO "AT+QNWINFO\r"
 
 /* =========================================================
+ * SMS / MESSAGE CONTROL
+ * ========================================================= */
+/* Query current CNMI configuration */
+#define AT_CMD_SMS_CNMI_QUERY "AT+CNMI?\r"
+#define AT_RES_SMS_CNMI_QUERY "+CNMI:"
+#define AT_CMD_SMS_CNMI_SET "AT+CNMI=%d,%d,%d,%d,%d\r" /* Set CNMI configuration */
+#define AT_CMD_SMS_DISABLE_URC "AT+CNMI=0,0,0,0,0\r"   /* Recommended: Disable all SMS URCs */
+#define AT_CMD_SMS_MIN_URC "AT+CNMI=1,0,0,0,0\r"       /* Alternative: Minimal SMS indication (if ever needed) */
+
+/* =========================================================
  * TIME / CLOCK
  * ========================================================= */
 #define AT_CMD_TIME_AUTO_UPDATE "AT+CTZU=%d\r"
@@ -77,16 +87,61 @@ extern "C"
 /* =========================================================
  * HTTP / HTTPS
  * ========================================================= */
-#define AT_CMD_HTTP_CFG_URL "AT+QHTTPCFG=\"url\",\"%s\"\r"
-#define AT_CMD_HTTP_CFG_SSL "AT+QHTTPCFG=\"ssl\",%d\r"
+/* HTTP Configuration */
+#define AT_CMD_HTTP_CFG_CONTEXT "AT+QHTTPCFG=\"contextid\",1\r"
+#define AT_CMD_HTTP_CFG_SSLCTX "AT+QHTTPCFG=\"sslctxid\",1\r"
+#define AT_CMD_HTTP_CFG_RESPONSE_HDR "AT+QHTTPCFG=\"responseheader\",0\r"
+#define AT_CMD_HTTP_CFG_AUTO_RES "AT+QHTTPCFG=\"rspout/auto\",0\r"
+#define AT_CMD_SET_SSL_CIPHERSUITE "AT+QSSLCFG=\"ciphersuite\",1,0x0005\r\n"
+#define MODEM_CMD_SET_SSL_CACERT "AT+QSSLCFG=\"cacert\",1,\"%s\"\r\n"
+
+#define AT_CMD_HTTP_CFG_REQUEST_HDR "AT+QHTTPCFG=\"requestheader\",%d\r"
+#define AT_CMD_HTTP_CFG_CONTENTTYPE "AT+QHTTPCFG=\"contenttype\",%d\r"
+#define AT_CMD_HTTP_CFG_RESET "AT+QHTTPCFG=\"reset\"\r"
+
+/* HTTP URL */
+#define AT_CMD_HTTP_SET_URL "AT+QHTTPURL=%d,%d\r"
+
+/* HTTP GET */
 #define AT_CMD_HTTP_GET "AT+QHTTPGET=%d\r"
+#define AT_CMD_HTTP_GET_HDR "AT+QHTTPGET=%d,%d,%d\r"
+#define AT_RES_HTTP_GET "+QHTTPGET:"
+
+/* HTTP GET with range */
+#define AT_CMD_HTTP_GET_EX "AT+QHTTPGETEX=%d,%d,%d\r"
+
+/* HTTP POST */
 #define AT_CMD_HTTP_POST "AT+QHTTPPOST=%d,%d,%d\r"
+#define AT_RES_HTTP_POST "+QHTTPPOST:"
+
+/* HTTP POST via file */
+#define AT_CMD_HTTP_POST_FILE "AT+QHTTPPOSTFILE=\"%s\",%d\r"
+#define AT_RES_HTTP_POST_FILE "+QHTTPPOSTFILE:"
+
+/* HTTP PUT */
+#define AT_CMD_HTTP_PUT "AT+QHTTPPUT=%d,%d,%d\r"
+#define AT_RES_HTTP_PUT "+QHTTPPUT:"
+
+/* HTTP PUT via file */
+#define AT_CMD_HTTP_PUT_FILE "AT+QHTTPPUTFILE=\"%s\",%d\r"
+#define AT_RES_HTTP_PUT_FILE "+QHTTPPUTFILE:"
+
+/* HTTP READ RESPONSE */
 #define AT_CMD_HTTP_READ "AT+QHTTPREAD=%d\r"
+#define AT_RES_HTTP_READ "+QHTTPREAD: 0"
+
+/* HTTP READ RESPONSE TO FILE */
+#define AT_CMD_HTTP_READ_FILE "AT+QHTTPREADFILE=\"%s\",%d\r"
+#define AT_RES_HTTP_READ_FILE "+QHTTPREADFILE:"
+
+/* HTTP STOP */
+#define AT_CMD_HTTP_STOP "AT+QHTTPSTOP\r"
 
 /* =========================================================
  * MQTT
  * ========================================================= */
 #define AT_CMD_MQTT_ENABLE_PAYLOAD_LEN "AT+QMTCFG=\"recv/mode\",%d,0,1\r"
+#define AT_CMD_MQTT_KEEPALIVE "AT+QMTCFG=\"keepalive\",%d,120\r"
 #define AT_CMD_MQTT_AUTO_CLEANUP "AT+QMTCFG=\"session\",%d,1\r"
 #define AT_CMD_MQTT_OPEN "AT+QMTOPEN=%d,\"%s\",%d\r"
 #define AT_RES_MQTT_OPEN "+QMTOPEN:"

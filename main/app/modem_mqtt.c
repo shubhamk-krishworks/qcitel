@@ -4,9 +4,10 @@
 #include "oal_log.h"
 #include "oal_timer.h"
 
-#include "modem_mqtt.h"
 #include "modem.h"
 #include "modem_cmd.h"
+
+#include "modem_mqtt.h"
 
 /* =========================================================
  * Static State Variables
@@ -305,9 +306,7 @@ void mqtt_data_process(mqtt_packet_type_t type, char *data)
             }
         }
         else
-        {
             OAL_LOGW(MODEM_MQTT, "QMTRECV header parse failed\n");
-        }
     }
     break;
 
@@ -499,6 +498,9 @@ int modem_mqtt_connect(mqtt_instance_no_t inst_no, mqtt_config_t mqtt_config)
         sprintf(command, AT_CMD_MQTT_AUTO_CLEANUP, inst_no);
         send_at_command(command);
 
+        sprintf(command, AT_CMD_MQTT_KEEPALIVE, inst_no);
+        send_at_command(command);
+
         /* Open MQTT socket */
         sprintf(command, AT_CMD_MQTT_OPEN, inst_no,
                 mqtt_config.broker_ip,
@@ -615,9 +617,7 @@ int modem_mqtt_unsub(mqtt_instance_no_t inst, const char *topic)
 /**
  * @brief Publish payload to MQTT topic.
  */
-int modem_mqtt_pub(mqtt_instance_no_t inst,
-                   const char *topic,
-                   const char *payload)
+int modem_mqtt_pub(mqtt_instance_no_t inst, const char *topic, const char *payload)
 {
     if (!modem_wait_timer.modem_occupied)
     {

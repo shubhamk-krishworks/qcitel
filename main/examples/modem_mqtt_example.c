@@ -84,7 +84,7 @@ void modem_mqtt_example(void)
     mqtt_config_t mqtt_config = {
         .broker_ip = "139.59.65.117",
         .broker_port = 1886,
-        .client_id = "ESP32_EC200U_Device1",
+        .client_id = "jhgfdsasdfghio98765432qwertyhgjbv",
         .username = "admin",
         .password = "Pass@2023",
     };
@@ -103,11 +103,11 @@ void modem_mqtt_example(void)
 
     /* ---------------- Publish Loop ---------------- */
 
-    for (size_t i = 0; i < 10; i++)
-    {
-        modem_mqtt_pub(MQTT_INSTANCE_0, "device", "Hello");
-        vTaskDelay(pdMS_TO_TICKS(15 * 1000)); // Publish every 15 seconds
-    }
+    // for (size_t i = 0; i < 1000; i++)
+    // {
+    //     modem_mqtt_pub(MQTT_INSTANCE_0, "device", "Hello");
+    //     vTaskDelay(pdMS_TO_TICKS(5 * 1000)); // Publish every 15 seconds
+    // }
 
-    modem_mqtt_disconnect(MQTT_INSTANCE_0);
+    // modem_mqtt_disconnect(MQTT_INSTANCE_0);
 }

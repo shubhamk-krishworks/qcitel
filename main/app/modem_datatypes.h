@@ -134,4 +134,14 @@ typedef enum
 
 } mqtt_packet_type_t;
 
+typedef enum
+{
+    HTTP_PKT_NONE = 0,  /**< No data */
+    HTTP_PKT_HEADER,    /**< HTTP response header */
+    HTTP_PKT_GET,       /* GET request */
+    HTTP_PKT_BODY,      /**< HTTP response body chunk */
+    HTTP_PKT_BODY_DONE, /**< Complete HTTP response body */
+    HTTP_PKT_ERROR      /**< Error packet */
+} http_packet_type_t;
+
 #endif /* AT_DATA_TYPES_H */

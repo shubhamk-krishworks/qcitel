@@ -14,6 +14,7 @@
 #include "oal_thread.h"
 
 #include "modem_mqtt.h"
+#include "modem_http.h"
 
 #define MODEM_TAG "Modem"
 
@@ -46,9 +47,7 @@ modem_wait_timer_t modem_wait_timer = {0};
  * ========================================================= */
 void send_at_command(const char *cmd)
 {
-    hal_uart_write(&uart_driver_handle,
-                   (const uint8_t *)cmd,
-                   strlen(cmd));
+    hal_uart_write(&uart_driver_handle, (const uint8_t *)cmd, strlen(cmd));
     OAL_DelayMS(500);
 }
 
@@ -58,7 +57,7 @@ void uart_data_processor(void *arg)
     while (OAL_Queue_WaitPop(&uart_rx_data_queue, buffer) > 0)
     {
         char *data = buffer;
-        OAL_LOGI(MODEM_TAG, "%s", (char *)data);
+        // OAL_LOGI(MODEM_TAG, "%s", (char *)data);
 
         /* -------- SIM status -------- */
         if (strstr(data, AT_RES_SIM_STATUS))
@@ -104,7 +103,15 @@ void uart_data_processor(void *arg)
             {
                 mqtt_data_process(type, data);
             }
+            else
+            {
+                http_packet_type_t type = http_classify_packet(data);
+                if (type != HTTP_PKT_NONE)
+                    process_http_data(type, data);
+            }
         }
+
+        OAL_DelayMS(10);
     }
 }
 
@@ -245,6 +252,8 @@ int modem_setup(void)
             modem_wait_timer.release(&modem_wait_timer);
             return -1; /* SIM not ready */
         }
+
+        send_at_command(AT_CMD_SMS_DISABLE_URC);
 
         /* -------- Operator selection (automatic) -------- */
         retry = MAX_RETRY;

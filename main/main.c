@@ -11,6 +11,7 @@
 #include "modem.h"
 
 #include "modem_mqtt_example.h"
+#include "modem_http_example.h"
 
 /* Application log tag */
 #define TAG "APP_UART"
@@ -48,4 +49,6 @@ void app_main(void)
 
     /* ---------------- MQTT Example Code Run ---------------- */
     modem_mqtt_example();
+
+    // modem_http_example();
 }
